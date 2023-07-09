@@ -5,7 +5,8 @@ const AddItem = (props) => {
 
     const [item, setItem] = useState({
         task: "",
-        completed: false
+        completed: false,
+        visible: true
     })
 
     const submitForm = (e) => {
@@ -13,7 +14,8 @@ const AddItem = (props) => {
         addItem(item)
         setItem({
             task: "",
-            completed: false
+            completed: false,
+            visible: true
         })
     }
 

@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 
 const DisplayItem = (props) => {
 
-    const {task, completed, index, deleteItem, completeTask} = props
+    const {task, completed, visibility, index, deleteItem, completeTask} = props
     // const [finished, setFinished] = useState(completed)
 
     const deleteStyle = {
@@ -15,6 +15,8 @@ const DisplayItem = (props) => {
     }
 
     return (
+        <>
+        {visibility?
         <div style={completed? deleteStyle :normal}>
             <label>{task}</label>
             {
@@ -24,6 +26,9 @@ const DisplayItem = (props) => {
             }
             {completed?<button onClick={()=> deleteItem(index)}>Delete</button>: <></>}
         </div>
+        :<></>
+        }
+        </>
     )
 }
 

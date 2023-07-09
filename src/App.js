@@ -1,15 +1,24 @@
 import './App.css';
 import AddItem from './components/AddItem';
 import DisplayItem from './components/DisplayItem';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 function App() {
 
   const [items, setItems] = useState([])
+  // const [session, setSession] = useState(() =>{
+  //   const saved = localStorage.getItem('itemList');
+  //   const intitialValue = JSON.parse(saved);
+  //   return intitialValue || ""
+  // })
 
   const newItem = item => {
     setItems((currentData) => ([...currentData, item]))
   }
+
+  // useEffect(() => {
+  //   localStorage.setItem('itemList', JSON.stringify(items))
+  // }, [items]);
 
   const completeItem = id => {
     let iCopy = [...items]
@@ -18,18 +27,18 @@ function App() {
   }
 
   const removeItem = id => {
-    let left = items.slice(0,id)
-    let right = items.slice(id+1)
-    setItems(left.concat(right))
+    let iCopy = [...items]
+    iCopy[id].visible = !iCopy[id].visible
+    setItems(iCopy)
   }
-console.log(items)
+  console.log(items)
   return (
     <>
     <AddItem addItem={newItem}/>
     {
       items.map( (item, i) => {
         return(
-          <DisplayItem task={item.task} completed={item.completed} index={i} deleteItem={removeItem} completeTask={completeItem} />
+          <DisplayItem task={item.task} completed={item.completed} visibility={item.visible} index={i} deleteItem={removeItem} completeTask={completeItem} />
         )
       })
     }
