@@ -1,24 +1,39 @@
-import logo from './logo.svg';
 import './App.css';
+import AddItem from './components/AddItem';
+import DisplayItem from './components/DisplayItem';
+import { useState } from 'react';
 
 function App() {
+
+  const [items, setItems] = useState([])
+
+  const newItem = item => {
+    setItems((currentData) => ([...currentData, item]))
+  }
+
+  const completeItem = id => {
+    let iCopy = [...items]
+    iCopy[id].completed = !iCopy[id].completed
+    setItems(iCopy)
+  }
+
+  const removeItem = id => {
+    let left = items.slice(0,id)
+    let right = items.slice(id+1)
+    setItems(left.concat(right))
+  }
+console.log(items)
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+    <AddItem addItem={newItem}/>
+    {
+      items.map( (item, i) => {
+        return(
+          <DisplayItem task={item.task} completed={item.completed} index={i} deleteItem={removeItem} completeTask={completeItem} />
+        )
+      })
+    }
+    </>
   );
 }
 
